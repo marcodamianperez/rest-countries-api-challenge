@@ -118,6 +118,10 @@ form .country {
     background-color: #fff;
 }
 
+.card__details span {
+    font-weight: 300;
+}
+
 .card__flag {
     width: 100%;
 }
