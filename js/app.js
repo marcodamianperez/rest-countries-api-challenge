@@ -51,7 +51,7 @@ const generateHTML = countries => {
 
     countries.forEach(country => {
         html += `
-        <div class="card">
+        <a href="details.html" class="card">
             <img class="card__flag" src="${country.flag}" alt="${country.demonym} flag">
             <div class="card__details">
                 <div class="card__name">${country.name}</div>
@@ -59,7 +59,7 @@ const generateHTML = countries => {
                 <div class="card__region">Region: <span>${country.region}</span></div>
                 <div class="card__capital">Capital: <span>${country.capital}</span></div>
             </div>
-        </div>
+        </a>
         `;    
     });
 
