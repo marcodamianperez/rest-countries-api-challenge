@@ -1,9 +1,9 @@
 const gridContainer = document.querySelector('.grid-container');
 const region = document.querySelector('.region');
+const input = document.querySelector('form .country');
 
 // show all countries when the page loads
 window.addEventListener("DOMContentLoaded", () => {
-
     getCountries()
         .then(countries => generateHTML(countries));
 });
@@ -11,16 +11,41 @@ window.addEventListener("DOMContentLoaded", () => {
 // listen to the change region event
 region.addEventListener('change', () => {
     getCountries()
-        .then(countries => filteredByRegion(countries));
+        .then(countries => filterByRegion(countries));
+});
+
+// listen to change in search field
+input.addEventListener('input', () => {
+    const term = input.value.trim().toLowerCase();
+    filterCountry(term);
 });
 
 // filter countries by region
-const filteredByRegion = countries => {
-    filteredCountries = countries.filter(country => country.region === region.selectedOptions[0].innerText);
-    generateHTML(filteredCountries);
+const filterByRegion = countries => {
+    if (region.value === 'all') {
+        generateHTML(countries);
+    } else {
+        const filteredCountriesByRegion = countries.filter(country => country.region.toLowerCase() === region.value);
+        generateHTML(filteredCountriesByRegion);
+    }
 }
 
-// update the UI
+// search for a country
+const filterCountry = term => {
+    // get countries showed on screen
+    let countriesOnScreen = Array.from(document.querySelectorAll('.card'));
+
+    // filter countries acording search term
+    countriesOnScreen.forEach(country => {
+        if (!country.querySelector('.card__name').innerText.toLowerCase().includes(term)) {
+            country.classList.add('hide');
+        } else {
+            country.classList.remove('hide');
+        }
+    });
+}
+
+// generate html template & update UI
 const generateHTML = countries => {
     let html = '';
 
